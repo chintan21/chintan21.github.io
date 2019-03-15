@@ -33,10 +33,10 @@ function saveToFirebase(email) {
 
     firebase.database().ref('subscription-entries').push().set(emailObject)
         .then(function(snapshot) {
-            success(); // some success method
+            document.write("You have been subscribed!..");
         }, function(error) {
             console.log('error' + error);
-            error(); // some error method
+            document.write("Sorry!..");
         });
 }
 var email = document.getElementById("inputEmail").value;
