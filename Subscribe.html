@@ -8,7 +8,7 @@
             <h2> Register you email with us</h2>
             <label for="inputEmail" >Email Address</label>
             <input type="email" id="inputEmail" placeholder="Email address" required autofocus>
-            <button class="btn" type="submit" onsubmit="EmailSave()">Subscribe!</button>
+            <button onclick="EmailSave()">Click me</button>
         </form>
 
         <h1></h1>
@@ -56,7 +56,7 @@
 
   function saveToFirebase(email) {
     var emailObject = {
-        email: email
+        Email_ID: email
     };
     firebase.database().ref('subscription-entries').push().set(emailObject)
         .then(function(snapshot) {
@@ -66,5 +66,4 @@
             document.write("Sorry!..");
         });
   }
-
 </script>
