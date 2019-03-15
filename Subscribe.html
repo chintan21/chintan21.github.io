@@ -4,27 +4,56 @@
             Sample Website
         </header>
 
-        <form onsubmit="EmailSave()">
+        <form>
             <h2> Register you email with us</h2>
             <label for="inputEmail" >Email Address</label>
             <input type="email" id="inputEmail" placeholder="Email address" required autofocus>
-            <button class="btn" type="submit" >Subscribe!</button>
+            <button class="btn" type="submit" onsubmit="EmailSave()">Subscribe!</button>
         </form>
+
+        <h1></h1>
     </body>
 </html>
 
 <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBjkdpaczO06IGYlBfc1wRHfu0Xta5KNVc",
-    authDomain: "contactus-77aaa.firebaseapp.com",
-    databaseURL: "https://contactus-77aaa.firebaseio.com",
-    projectId: "contactus-77aaa",
-    storageBucket: "contactus-77aaa.appspot.com",
-    messagingSenderId: "939796263665"
-  };
-  firebase.initializeApp(config);
+    function ConnectFirebase(){
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBjkdpaczO06IGYlBfc1wRHfu0Xta5KNVc",
+            authDomain: "contactus-77aaa.firebaseapp.com",
+            databaseURL: "https://contactus-77aaa.firebaseio.com",
+            projectId: "contactus-77aaa",
+            storageBucket: "contactus-77aaa.appspot.com",
+            messagingSenderId: "939796263665"
+        };
+
+        var fb = firebase.initializeApp(config);
+        return fb;
+    }
+
+    function getRef(f, table_name){
+        var ref = f.ref(table_name);
+        return ref;
+    }
+
+    function EmailSave(){
+        var email = document.getElementById("inputEmail").value;
+        var fire = ConnectFirebase();
+        var fire_ref = getRef(fire, 'subscription-entries')
+        fire_ref.push().set(email)
+        .then(function(snapshot){
+            console.log(snapshot);
+            document.getElementsByTagName(h1).innerHTML = "Subscription Successfull"
+
+        }, function(error){
+            console.log(error);
+            document.getElementsByTagName(h1).innerHTML = "Subscription Failed!."
+        });
+    }
+
+  
+
   function saveToFirebase(email) {
     var emailObject = {
         email: email
@@ -38,12 +67,9 @@
         });
   }
 
-function EmailSave(){
-var email = document.getElementById("inputEmail").value;
-saveToFirebase(email);
+    function EmailSave(){
     
-}
-
-
-
+    saveToFirebase(email);
+        
+    }
 </script>
